@@ -1,0 +1,30 @@
+{
+  "name": "Bench_Handler_CV_Request_by_Mail",
+  "description": "Blank Process",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.UIAutomation.Activities": "[18.3.6877.28298]",
+    "UiPath.System.Activities": "[18.3.6877.28276]",
+    "UiPath.Excel.Activities": "[2.4.6863.30657]",
+    "UiPath.Mail.Activities": "[1.2.6863.29868]",
+    "Microsoft.Exchange.WebServices": "[2.2]",
+    "SB.OutlookMail.Activities": "[1.0.0]",
+    "email": "[1.1.1]",
+    "GemBox.Email": "[13.0.0.1022]"
+  },
+  "schemaVersion": "3.2",
+  "studioVersion": "18.3.2.0",
+  "projectVersion": "1.0.0.0",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ]
+  },
+  "projectType": "Workflow",
+  "libraryOptions": {
+    "includeOriginalXaml": false,
+    "privateWorkflows": []
+  }
+}

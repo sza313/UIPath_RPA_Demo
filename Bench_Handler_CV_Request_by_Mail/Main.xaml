@@ -1,0 +1,915 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="Main_1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:si="clr-namespace:System.IO;assembly=mscorlib"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Reactive</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.Variables>
+      <Variable x:TypeArguments="x:String" Name="enterpriseID" />
+      <Variable x:TypeArguments="x:String" Default="Szury1985" Name="password" />
+      <Variable x:TypeArguments="x:String" Name="userDocPath" />
+      <Variable x:TypeArguments="x:String" Name="searchPlatform" />
+      <Variable x:TypeArguments="x:String" Default="Budapest" Name="searchHomeLocation" />
+    </Flowchart.Variables>
+    <Flowchart.StartNode>
+      <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_10">
+        <Sequence DisplayName="Init Robotic process" sap2010:WorkflowViewState.IdRef="Sequence_18">
+          <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory for the log file" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\" />
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="argLogtext">CV Handler new execution -- START</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:GetEnvironmentVariable DisplayName="Get USERNAME Environment Variable" sap2010:WorkflowViewState.IdRef="GetEnvironmentVariable_1" Variable="USERNAME" VariableValue="[enterpriseID]" />
+          <ui:GetEnvironmentVariable DisplayName="Get PROFILE Environment Variable" sap2010:WorkflowViewState.IdRef="GetEnvironmentVariable_2" Variable="USERPROFILE" VariableValue="[userDocPAth]" />
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[userDocPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[userDocPath+"\"]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:InputDialog DisplayName="Input Dialog for platforms" sap2010:WorkflowViewState.IdRef="InputDialog_1" IsPassword="False" Label="Platforms:" Options="[{&quot;Testing&quot;, &quot;Digital&quot;}]" Title="Select platform for candidates">
+            <ui:InputDialog.Result>
+              <OutArgument x:TypeArguments="x:String">[searchPlatform]</OutArgument>
+            </ui:InputDialog.Result>
+          </ui:InputDialog>
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="argLogtext">["Global variables were set : enterpriseID="+enterpriseID+" userDocPAth="+userDocPath+" searchPlatform="+searchPlatform]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
+        <FlowStep.Next>
+          <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+            <Sequence DisplayName="Delete the old AvailabilityReport.xlsx file" sap2010:WorkflowViewState.IdRef="Sequence_7">
+              <TryCatch DisplayName="Check if the AvailabilityReport.xlsx file exists " sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                <TryCatch.Try>
+                  <ui:Delete ContinueOnError="{x:Null}" DisplayName="Delete AvailabilityReport.xlsx file" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[userDocPath+&quot;Downloads\AvailabilityReport.xlsx &quot;]" />
+                </TryCatch.Try>
+                <TryCatch.Catches>
+                  <Catch x:TypeArguments="si:FileNotFoundException" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                    <ActivityAction x:TypeArguments="si:FileNotFoundException">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="si:FileNotFoundException" Name="exception" />
+                      </ActivityAction.Argument>
+                    </ActivityAction>
+                  </Catch>
+                </TryCatch.Catches>
+              </TryCatch>
+              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="argLogtext">AvalibilityReport.xlsx was deleted</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+            </Sequence>
+            <FlowStep.Next>
+              <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+                <Sequence DisplayName="Delete the old Candidates.xlsx file" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                  <TryCatch DisplayName="Check if the Candidates.xlsx file exists " sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                    <TryCatch.Try>
+                      <ui:Delete ContinueOnError="{x:Null}" DisplayName="Delete AvailabilityReport.xlsx file" sap2010:WorkflowViewState.IdRef="Delete_2" Path="[userDocPath+&quot;Documents\Candidates.xlsx &quot;]" />
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="si:FileNotFoundException" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                        <ActivityAction x:TypeArguments="si:FileNotFoundException">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="si:FileNotFoundException" Name="exception" />
+                          </ActivityAction.Argument>
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                  </TryCatch>
+                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="argLogtext">Candidates.xlsx was deleted</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                </Sequence>
+                <FlowStep.Next>
+                  <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                    <Sequence DisplayName="Open the DSMT application" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                      <ui:OpenBrowser UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Open the following URL: https://dsmtddc.accenture.com/login.jsp" Hidden="False" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" Url="https://dsmtddc.accenture.com/login.jsp">
+                        <ui:OpenBrowser.Body>
+                          <ActivityAction x:TypeArguments="x:Object">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                            </ActivityAction.Argument>
+                          </ActivityAction>
+                        </ui:OpenBrowser.Body>
+                      </ui:OpenBrowser>
+                      <ui:WaitUiElementAppear FoundElement="{x:Null}" DisplayName="Find Enterprise ID field" sap2010:WorkflowViewState.IdRef="WaitUiElementAppear_1" WaitActive="False" WaitVisible="False">
+                        <ui:WaitUiElementAppear.Target>
+                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e5bb43e0ae8a4be090d1104d383a3f24" Selector="&lt;html app='chrome.exe' title='Login - Demand management' /&gt;&lt;webctrl name='j_username' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                        </ui:WaitUiElementAppear.Target>
+                      </ui:WaitUiElementAppear>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="argLogtext">DSMT application was opened</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type the user name into Enterprise ID field" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_1" SendWindowMessages="False" SimulateType="False" Text="[enterpriseID]">
+                        <ui:TypeInto.Target>
+                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="5b0784e5601d30dc9f319ea892d44109" Selector="&lt;html app='chrome.exe' title='Login - Demand management' /&gt;&lt;webctrl name='j_username' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                        </ui:TypeInto.Target>
+                      </ui:TypeInto>
+                      <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type the password into Password field" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_2" SendWindowMessages="False" SimulateType="False" Text="[password]">
+                        <ui:TypeInto.Target>
+                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="397364036f2fa1120623bfa9a96a6a43" Selector="&lt;html app='chrome.exe' title='Login - Demand management' /&gt;&lt;webctrl name='j_password' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                        </ui:TypeInto.Target>
+                      </ui:TypeInto>
+                      <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click the ENTER button" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                        <ui:Click.CursorPosition>
+                          <ui:CursorPosition Position="Center">
+                            <ui:CursorPosition.OffsetX>
+                              <InArgument x:TypeArguments="x:Int32" />
+                            </ui:CursorPosition.OffsetX>
+                            <ui:CursorPosition.OffsetY>
+                              <InArgument x:TypeArguments="x:Int32" />
+                            </ui:CursorPosition.OffsetY>
+                          </ui:CursorPosition>
+                        </ui:Click.CursorPosition>
+                        <ui:Click.Target>
+                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a82c85fd020d15bf092654c14a7d3f4a" Selector="&lt;html app='chrome.exe' title='Login - Demand management' /&gt;&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
+                        </ui:Click.Target>
+                      </ui:Click>
+                      <ui:WaitUiElementAppear FoundElement="{x:Null}" DisplayName="Find Project List title to check if the application navigated to the main page" sap2010:WorkflowViewState.IdRef="WaitUiElementAppear_2" WaitActive="False" WaitVisible="False">
+                        <ui:WaitUiElementAppear.Target>
+                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="0a0ac646fe3c34d422407cb3564c7703" Selector="&lt;html app='chrome.exe' title='Project List' /&gt;&lt;webctrl tag='H1' /&gt;" WaitForReady="INTERACTIVE" />
+                        </ui:WaitUiElementAppear.Target>
+                      </ui:WaitUiElementAppear>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="argLogtext">["The login with user "+enterpriseID+" was successfull"]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                    </Sequence>
+                    <FlowStep.Next>
+                      <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                        <Sequence DisplayName="Generate the AvailabilityReport.xlsx file" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Default="Budapest" Name="location" />
+                          </Sequence.Variables>
+                          <ui:WaitUiElementAppear FoundElement="{x:Null}" DisplayName="Find the myReports menu item" sap2010:WorkflowViewState.IdRef="WaitUiElementAppear_3" WaitActive="False" WaitVisible="False">
+                            <ui:WaitUiElementAppear.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="fdc9853a7210d767874430b27c411bec" Selector="&lt;html app='chrome.exe' title='Project List' /&gt;&lt;webctrl aaname='myReports' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                            </ui:WaitUiElementAppear.Target>
+                          </ui:WaitUiElementAppear>
+                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on the myReports manu item" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                            <ui:Click.CursorPosition>
+                              <ui:CursorPosition Position="Center">
+                                <ui:CursorPosition.OffsetX>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetX>
+                                <ui:CursorPosition.OffsetY>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetY>
+                              </ui:CursorPosition>
+                            </ui:Click.CursorPosition>
+                            <ui:Click.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="fdc9853a7210d767874430b27c411bec" Selector="&lt;html app='chrome.exe' title='Project List' /&gt;&lt;webctrl aaname='myReports' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                            </ui:Click.Target>
+                          </ui:Click>
+                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on the Avalibility Report menu item" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                            <ui:Click.CursorPosition>
+                              <ui:CursorPosition Position="Center">
+                                <ui:CursorPosition.OffsetX>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetX>
+                                <ui:CursorPosition.OffsetY>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetY>
+                              </ui:CursorPosition>
+                            </ui:Click.CursorPosition>
+                            <ui:Click.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="b88345b16a1059b480bbcf88e7bde62d" Selector="&lt;html app='chrome.exe' title='Project List' /&gt;&lt;webctrl aaname='Availability Report' tag='A' /&gt;" WaitForReady="INTERACTIVE" />
+                            </ui:Click.Target>
+                          </ui:Click>
+                          <ui:WaitUiElementAppear FoundElement="{x:Null}" DisplayName="Find the Avalibility Report title to check if the application navigated to the proper page" sap2010:WorkflowViewState.IdRef="WaitUiElementAppear_4" WaitActive="False" WaitVisible="False">
+                            <ui:WaitUiElementAppear.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="5093693e0f7d226ef46a4ccc308ff717" Selector="&lt;html app='chrome.exe' title='Availability Report' /&gt;&lt;webctrl tag='H1' /&gt;" WaitForReady="INTERACTIVE" />
+                            </ui:WaitUiElementAppear.Target>
+                          </ui:WaitUiElementAppear>
+                          <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Select the proper location from the Location drop down" sap2010:WorkflowViewState.IdRef="SelectItem_1" Item="[location]">
+                            <ui:SelectItem.Items>
+                              <scg:List x:TypeArguments="x:String" Capacity="8">
+                                <x:String>All</x:String>
+                                <x:String>Bratislava</x:String>
+                                <x:String>Bucharest</x:String>
+                                <x:String>Prague</x:String>
+                                <x:String>Budapest</x:String>
+                                <x:String>Kosice</x:String>
+                              </scg:List>
+                            </ui:SelectItem.Items>
+                            <ui:SelectItem.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ac13fdc1b5aa061510c63acb26f621c5" Selector="&lt;html app='chrome.exe' title='Availability Report' /&gt;&lt;webctrl tag='SELECT' /&gt;" WaitForReady="COMPLETE" />
+                            </ui:SelectItem.Target>
+                          </ui:SelectItem>
+                          <ui:Click DelayBefore="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="10000" DisplayName="Click on the Export Excel menu item" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                            <ui:Click.CursorPosition>
+                              <ui:CursorPosition Position="Center">
+                                <ui:CursorPosition.OffsetX>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetX>
+                                <ui:CursorPosition.OffsetY>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetY>
+                              </ui:CursorPosition>
+                            </ui:Click.CursorPosition>
+                            <ui:Click.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="56d69eae560c145867d2011f786a6749" Selector="&lt;html app='chrome.exe' title='Availability Report' /&gt;&lt;webctrl parentid='contextMenuUl' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                            </ui:Click.Target>
+                          </ui:Click>
+                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="argLogtext">The new Availibility.xlsx report was successfully created</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                        </Sequence>
+                        <FlowStep.Next>
+                          <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                            <Sequence DisplayName="Close the DSMT application" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                              <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'Availabil Page'" sap2010:WorkflowViewState.IdRef="WindowScope_1" Selector="&lt;html app='chrome.exe' title='Availability Report' /&gt;">
+                                <ui:WindowScope.Body>
+                                  <ActivityAction x:TypeArguments="x:Object">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                      <ui:CloseApplication DisplayName="Close Ghrome and the DSMT application" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
+                                        <ui:CloseApplication.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="5c86c5ad8b8f566f9163f93d540aeb93" WaitForReady="INTERACTIVE" />
+                                        </ui:CloseApplication.Target>
+                                      </ui:CloseApplication>
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:WindowScope.Body>
+                              </ui:WindowScope>
+                              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argLogtext">DSMT application was closed</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                            </Sequence>
+                            <FlowStep.Next>
+                              <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_6">
+                                <Sequence DisplayName="Get candidates from the AvalibilityReport.xlsx file" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="sd:DataTable" Name="availibilityReport" />
+                                    <Variable x:TypeArguments="x:String" Name="DTOut" />
+                                    <Variable x:TypeArguments="x:String" Name="result" />
+                                    <Variable x:TypeArguments="x:String" Name="variable1" />
+                                    <Variable x:TypeArguments="sd:DataTable" Name="candidatesDT" />
+                                    <Variable x:TypeArguments="x:String" Name="searchCurrProject">
+                                      <Variable.Default>
+                                        <Literal x:TypeArguments="x:String" Value="" />
+                                      </Variable.Default>
+                                    </Variable>
+                                  </Sequence.Variables>
+                                  <ui:BuildDataTable DataTable="[candidatesDT]" DisplayName="Build candidatesDT to store our candidates" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Domain_x0020_ID&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;First_x0020_Name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Last_x0020_Name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Career_x0020_Level&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Billing_x0020_Code&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Platform&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+                                  <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Open the AvalibilityReport.xlsx for further process" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Visible="False" WorkbookPath="[userDocPath+&quot;Downloads\AvailabilityReport.xlsx &quot;]">
+                                    <ui:ExcelApplicationScope.Body>
+                                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                        <ActivityAction.Argument>
+                                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                        </ActivityAction.Argument>
+                                        <Sequence DisplayName="Processing the content of the AvalibilityReport.xlsx" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                                          <Delay Duration="00:00:05" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                                          <ui:ExcelReadRange AddHeaders="True" DataTable="[availibilityReport]" DisplayName="Read the content of the Avalibility Report sheet" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" SheetName="Availability Report">
+                                            <ui:ExcelReadRange.Range>
+                                              <InArgument x:TypeArguments="x:String">
+                                                <Literal x:TypeArguments="x:String" Value="" />
+                                              </InArgument>
+                                            </ui:ExcelReadRange.Range>
+                                          </ui:ExcelReadRange>
+                                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argLogtext">Avalibility.xlsx report was opened for further process</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                          <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[availibilityReport]" DisplayName="Iterate the content of the Avalibility Report" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                                            <ui:ForEachRow.Body>
+                                              <ActivityAction x:TypeArguments="sd:DataRow">
+                                                <ActivityAction.Argument>
+                                                  <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                                </ActivityAction.Argument>
+                                                <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                                                  <Sequence.Variables>
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="currProject" />
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="homeLocation" />
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="domainID" />
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="platform" />
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="careerLevel" />
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="billingCode" />
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="firstName" />
+                                                    <Variable x:TypeArguments="ui:GenericValue" Name="lastName" />
+                                                  </Sequence.Variables>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Platform" DisplayName="Get the value of the Platform field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_1" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[platform]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Current Project" DisplayName="Get the value of the Current Project field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_2" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[currProject]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Home Location" DisplayName="Get the value of the Home Location field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_3" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[homeLocation]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Domain ID" DisplayName="Get the value of the Domain ID field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_4" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[domainID]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Career Level" DisplayName="Get the value of the Career Level field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_5" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[careerLevel]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Bill Code" DisplayName="Get the value of the Bill Code field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_6" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[billingCode]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="First Name" DisplayName="Get the value of the First Name field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_7" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[firstName]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Last Name" DisplayName="Get the value of the Last Name field from the row" sap2010:WorkflowViewState.IdRef="GetRowItem_8" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="ui:GenericValue">[lastName]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <If Condition="[platform =searchPlatform and homeLocation =searchHomeLocation and currProject = searchCurrProject]" DisplayName="Check if the content of the row matches with the conditions below" sap2010:WorkflowViewState.IdRef="If_1">
+                                                    <If.Then>
+                                                      <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{domainID,firstName,lastName,careerLevel,billingCode,platform}]" DataTable="[candidatesDT]" DisplayName="Add the current data row to the data table of the candidates" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                                                    </If.Then>
+                                                  </If>
+                                                </Sequence>
+                                              </ActivityAction>
+                                            </ui:ForEachRow.Body>
+                                          </ui:ForEachRow>
+                                        </Sequence>
+                                      </ActivityAction>
+                                    </ui:ExcelApplicationScope.Body>
+                                  </ui:ExcelApplicationScope>
+                                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                    <ui:InvokeWorkflowFile.Arguments>
+                                      <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="argLogtext">["AvalibilityReport.xlsx was processed, all candidates sitting on bench belong to platform " +searchPlatform +" were selected"]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                    </ui:InvokeWorkflowFile.Arguments>
+                                  </ui:InvokeWorkflowFile>
+                                  <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Create Candidates.xlsx file from the data table of the candidates" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" Visible="False" WorkbookPath="[userDocPath+&quot;Documents\Candidates.xlsx&quot;]">
+                                    <ui:ExcelApplicationScope.Body>
+                                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                        <ActivityAction.Argument>
+                                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                        </ActivityAction.Argument>
+                                        <Sequence DisplayName="Write the content of the data table of candidates into the excel file" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                          <ui:ExcelWriteRange AddHeaders="True" DataTable="[candidatesDT]" DisplayName="Create worksheet Candidates and write the content of the data table of candidates into this" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="Candidates" StartingCell="A1" />
+                                        </Sequence>
+                                      </ActivityAction>
+                                    </ui:ExcelApplicationScope.Body>
+                                  </ui:ExcelApplicationScope>
+                                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                    <ui:InvokeWorkflowFile.Arguments>
+                                      <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="argLogtext">Candidates.xlsx was created from the search result</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                    </ui:InvokeWorkflowFile.Arguments>
+                                  </ui:InvokeWorkflowFile>
+                                </Sequence>
+                                <FlowStep.Next>
+                                  <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                                    <Sequence DisplayName="Sending e-mail to the LPS with list of the candidates" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                                      <Sequence.Variables>
+                                        <Variable x:TypeArguments="x:String" Name="lpsID" />
+                                      </Sequence.Variables>
+                                      <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[searchPlatform]" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                                        <Assign x:Key="Digital" DisplayName="Set LPS value" sap2010:WorkflowViewState.IdRef="Assign_2">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:String">[lpsID]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:String">peter.vartik</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                        <Assign x:Key="Testing" DisplayName="Set LPS value" sap2010:WorkflowViewState.IdRef="Assign_3">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:String">[lpsID]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:String">szabolcs.hudak</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </Switch>
+                                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                        <ui:InvokeWorkflowFile.Arguments>
+                                          <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="argLogtext">["The responsible LPS was set to "+lpsID+" ."]</InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                        </ui:InvokeWorkflowFile.Arguments>
+                                      </ui:InvokeWorkflowFile>
+                                      <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="szabolcs.hudak@accenture.com" Body="Dear &lt;b&gt;&lt;i&gt;LPS colleague&lt;/i&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&#xA;&#xA;Please see the possible candidates from bench in the attached excel sheet&lt;br&gt;&lt;br&gt;&#xA;&#xA;Kind Regards,&lt;br&gt;&#xA;Szabolcs Hudak" DisplayName="Send message to the LPS about candidates" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="True" IsDraft="False" Subject="Candidates from bench" To="[lpsID+&quot;@accenture.com&quot;]">
+                                        <ui:SendOutlookMail.Files>
+                                          <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+                                            <InArgument x:TypeArguments="x:String" xml:space="preserve">c:\Users\szabolcs.hudak\Documents\Candidates.xlsx </InArgument>
+                                          </scg:List>
+                                        </ui:SendOutlookMail.Files>
+                                      </ui:SendOutlookMail>
+                                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                        <ui:InvokeWorkflowFile.Arguments>
+                                          <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="argLogtext">["Email with the candidated was sent to the LPS: "+lpsID+". Candidates.xlsx file was attached."]</InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                        </ui:InvokeWorkflowFile.Arguments>
+                                      </ui:InvokeWorkflowFile>
+                                    </Sequence>
+                                    <FlowStep.Next>
+                                      <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+                                        <Sequence DisplayName="Sending one slider requests by mail to the candidates" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                                          <Sequence.Variables>
+                                            <Variable x:TypeArguments="sd:DataTable" Name="candidatesDT" />
+                                          </Sequence.Variables>
+                                          <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="Open Candidates.xlsx to read the data of the candidates" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3" Visible="False" WorkbookPath="[userDocPath+&quot;Documents\Candidates.xlsx &quot;]">
+                                            <ui:ExcelApplicationScope.Body>
+                                              <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                                <ActivityAction.Argument>
+                                                  <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                                </ActivityAction.Argument>
+                                                <Sequence DisplayName="Read the data of the candidates from the Candidates sheet" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                                                  <ui:ExcelReadRange AddHeaders="True" DataTable="[candidatesDT]" DisplayName="Read the data of the candidates from the Candidates sheet" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="Candidates">
+                                                    <ui:ExcelReadRange.Range>
+                                                      <InArgument x:TypeArguments="x:String">
+                                                        <Literal x:TypeArguments="x:String" Value="" />
+                                                      </InArgument>
+                                                    </ui:ExcelReadRange.Range>
+                                                  </ui:ExcelReadRange>
+                                                </Sequence>
+                                              </ActivityAction>
+                                            </ui:ExcelApplicationScope.Body>
+                                          </ui:ExcelApplicationScope>
+                                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argLogtext">Candidates.xlsx was opened for further process.</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argLogtext">[candidatesDT.ToString()]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                          <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[candidatesDT]" DisplayName="Iterate the data table of candidates from the Candidates sheet" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                                            <ui:ForEachRow.Body>
+                                              <ActivityAction x:TypeArguments="sd:DataRow">
+                                                <ActivityAction.Argument>
+                                                  <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                                </ActivityAction.Argument>
+                                                <Sequence DisplayName="Processing the current row" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                                                  <Sequence.Variables>
+                                                    <Variable x:TypeArguments="x:String" Name="domainID" />
+                                                    <Variable x:TypeArguments="x:String" Name="firstName" />
+                                                    <Variable x:TypeArguments="x:String" Name="lastName" />
+                                                  </Sequence.Variables>
+                                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Domain ID" DisplayName="Get the value of the Domain Id filed from the current row" sap2010:WorkflowViewState.IdRef="GetRowItem_9" Row="[row]">
+                                                    <ui:GetRowItem.Value>
+                                                      <OutArgument x:TypeArguments="x:String">[domainID]</OutArgument>
+                                                    </ui:GetRowItem.Value>
+                                                  </ui:GetRowItem>
+                                                  <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="szabolcs.hudak@accenture.com" Body="&lt;i&gt;&lt;b&gt;Dear Candidate&lt;/b&gt;&lt;/i&gt;&lt;br&gt;&lt;br&gt;&#xA;&#xA;Please send to me your updated one slider CV&lt;br&gt;&lt;br&gt;&#xA;Thanks for your help&lt;br&gt;&#xA;Kind Regards,&lt;br&gt;&#xA;Szabolcs Hudak" DisplayName="Send one slider request messages to the candidates" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="True" IsDraft="False" Subject="One Slider request" To="[domainID+&quot;@accenture.com&quot;]">
+                                                    <ui:SendOutlookMail.Files>
+                                                      <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4" />
+                                                    </ui:SendOutlookMail.Files>
+                                                  </ui:SendOutlookMail>
+                                                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                                    <ui:InvokeWorkflowFile.Arguments>
+                                                      <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                                      <InArgument x:TypeArguments="x:String" x:Key="argLogtext">["One slider CV request email was sent to "+domainID]</InArgument>
+                                                      <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                                    </ui:InvokeWorkflowFile.Arguments>
+                                                  </ui:InvokeWorkflowFile>
+                                                </Sequence>
+                                              </ActivityAction>
+                                            </ui:ForEachRow.Body>
+                                          </ui:ForEachRow>
+                                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Write Log" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="Snippets\LogWriting.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argClaimid">001</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argLogtext">FINISH - Bench_Handler_CV_Request_by_Mail</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="argfilepath">C:\UIPath\Logs\Bench_Handler_CV_Request_by_Mail\</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                        </Sequence>
+                                      </FlowStep>
+                                    </FlowStep.Next>
+                                  </FlowStep>
+                                </FlowStep.Next>
+                              </FlowStep>
+                            </FlowStep.Next>
+                          </FlowStep>
+                        </FlowStep.Next>
+                      </FlowStep>
+                    </FlowStep.Next>
+                  </FlowStep>
+                </FlowStep.Next>
+              </FlowStep>
+            </FlowStep.Next>
+          </FlowStep>
+        </FlowStep.Next>
+      </FlowStep>
+    </Flowchart.StartNode>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <x:Reference>__ReferenceID1</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID3</x:Reference>
+    <x:Reference>__ReferenceID4</x:Reference>
+    <x:Reference>__ReferenceID5</x:Reference>
+    <x:Reference>__ReferenceID6</x:Reference>
+    <x:Reference>__ReferenceID7</x:Reference>
+    <x:Reference>__ReferenceID8</x:Reference>
+    <sads:DebugSymbol.Symbol>d2dDOlxVc2Vyc1xzemFib2xjcy5odWRha1xPbmVEcml2ZSAtIEFjY2VudHVyZVxMaWZlYm9hdFxVaVBhdGhcQmVuY2hfSGFuZGxlcl9DVl9SZXF1ZXN0X2J5X01haWxcTWFpbi54YW1s8wFGA+8EDwIBAUk0ST8CAQNMNEw+AgECUAlvFAMBhQJyDYgBGAMB+wGLARGhARwDAfEBpAEV3wEgAwHVAeIBGbMCJAMBvwG2Ah3OAigDAbUB0QIh1QMsAgFS2AMlgwQwAgEzhgQp0gQ0AgEEUQtR2AEDAaYCUgtYIwMBoQJZC1nGAQMBnQJaC1rHAQMBmQJbC2IUAwGUAmMLZxwDAY4CaAtuIwMBhgJzD4ABGgMBgQKBAQ+HAScDAfwBjAETmQEeAwH3AZoBE6ABKwMB8gGlARetASgDAe8BrgEXsgEwAwHtAbMBF7kBLwMB6AG6ARe+ASUDAeQBvwEXwwElAwHgAcQBF9IBIgMB3gHTARfXATADAdwB2AEX3gEvAwHWAeQBSuQBVAMBwAHmARvqATQDAdMB6wEb+QEmAwHRAfoBG4gCJgMBzwGJAhuNAjQDAc0BjgIbnAIrAwHJAZ0CG6sCJgMBxgGsAhuyAjMDAcEBtwIfxgIwAwG7AccCH80CNwMBtgHaAinaAlgCAVPeAiPeAtYQAwGyAd8CI7oDPgIBaLsDI8EDOwIBYsIDI80DPgIBWc4DI9QDOwIBVNwDJ+0DMAIBR+4DJ/QDPwIBQfUDJ/sDPAIBOvwDJ4IEPwIBNIoEK5sERgIBKpwEK6IEQwIBJaMEK6kEQwIBIKoEK8oEOwIBCssEK9EEQwIBBVGjAVHVAQMBpwJWSlZ6AwGlAlRJVEwDAaQCVUlVagMBowJSrAFSxgEDAaICWZoBWaQBAwGgAlmzAVnDAQMBngJamQFapgEDAZwCWrUBWsQBAwGaAmA2YEcDAZcCXTddRAMBlQJjjQFjmQEDAZMCY6IBY9ABAwGSAmU3ZUcDAZACY9cBY/cBAwGPAmxKbHoDAY0CaklqTAMBjAJrSWvBAQMBiAJorAFoxgEDAYcCdRN13AEDAYIChQFOhQF+AwGAAoMBTYMBUAMB/wGEAU2EAW8DAf4BgQGwAYEBygEDAf0BjgEXjgHYAQMB+AGeAVKeAYIBAwH2AZwBUZwBVAMB9QGdAVGdAWwDAfQBmgG0AZoBzgEDAfMBpQGEAqUBrQIDAfABsAGqAbABnAIDAe4BtwFWtwGGAQMB7AG1AVW1AVgDAesBtgFVtgFwAwHqAbMBuAGzAdIBAwHpAbwBqgG8AZwCAwHnAboBwwK6AdMCAwHlAcEBqgHBAZwCAwHjAb8BvQK/AckCAwHhAdABqgHQAZgCAwHfAdUBqgHVAfoBAwHdAdwBVtwBhgEDAdsB2gFV2gFYAwHaAdsBVdsBjQEDAdgB2AG4AdgB0gEDAdcB6AGuAegBkwIDAdQB9wGuAfcBkwIDAdIBhgKuAYYCmgIDAdABiwKuAYsChQIDAc4BjgLrAY4C9wEDAcoBmgKuAZoCiQIDAcwBqQKuAakCoAIDAcgBnQJdnQJkAwHHAbACWrACigEDAcUBrgJZrgJcAwHEAa8CWa8CkgEDAcMBrAK8AawC1gEDAcIBtwLwAbcCrQIDAb4BvQIlwwIwAwG8AcsCXssCjgEDAboByQJdyQJgAwG5AcoCXcoCeAMBuAHHAsABxwLaAQMBtwHeAkDeAlADAbMB3wLqAd8CqAIDAbAB5QIptwM0AgFpvwNivwOSAQIBZ70DYb0DZAIBZr4DYb4D4AECAWS7A8UBuwPfAQIBY8ID+AHCA60CAgFgyAMpygM0AgFa0gNi0gOSAQIBWNADYdADZAIBV9EDYdEDkwECAVbOA8UBzgPfAQIBVdwDatwDfAIBSN0DKeQDMgIBTuUDKewDMgIBSvIDZvIDlgECAUbwA2XwA2gCAUXxA2XxA5MBAgFD7gPJAe4D4wECAUL1A8oE9QPuBAIBP/UDjAH1A6oBAgE+9QOwAfUDmQMCATz1A68E9QPGBAIBO4AEZoAElgECATn+A2X+A2gCATj/A2X/A8UBAgE2/APJAfwD4wECATWKBJ0CigTTAgIBMZAEMZgEPAIBK6AEaqAEmgECASmeBGmeBGwCASifBGmfBJgBAgEnnATNAZwE5wECASanBGqnBJoBAgEkpQRppQRsAgEjpgRppgSCAQIBIqMEzQGjBOcBAgEhqgRcqgRsAgEesAQxxwQ8AgELzwRqzwSaAQIBCc0Eac0EbAIBCM4Eac4EkgECAQfLBM0BywTnAQIBBnWbAXXZAQMBgwKOAZ8BjgHVAQMB+QG+AifCAj0DAb0B5gIr5gJyAwGuAecCK+0CPwMBqQHuAiv0AkMDAaQB9QIrtgM7AgFqyQMryQO1AgIBW+IDVOIDYAIBUd8DVd8DXAIBT+oDVOoDYgIBTecDVecDXAIBS5EEM5cERwIBLLYEM7oEQwIBGLsEM78ESAIBEsAEM8YESwIBDOYCO+YCRQMBrwHnAlrnAnADAawB6gIx6gJgAwGrAecC7QHnAoICAwGqAfICavICmgEDAagB8AJp8AJsAwGnAfECafECnwEDAaYB7gLMAe4C5gEDAaUB9QJc9QJyAwGiAfsCMbMDPAIBa8kDrgLJA7ICAgFfyQNbyQNrAgFdyQOUAskDoAICAVyRBGKRBHICAS+UBDmUBGgCAS6RBPgBkQSEAgIBLbgEX7gEaQIBHLYE/QG2BIQCAgEatgR2tgSBAQIBGbsE2gS7BIEFAgEWuwSYAbsEtgECARW7BLwBuwSiAwIBFLsEwgS7BNYEAgETxARyxASiAQIBEcIEccIEdAIBEMMEccMEpgECAQ7ABNUBwATvAQIBDYYDM4oDQwMBnAGLAzOPA0MDAZYBkAMzlANDAwGQAZUDM5kDQwMBigGaAzOeA0MDAYQBnwMzowNDAgF+pAMzqANDAgF4qQMzrQNDAgFyrgMzsgM4AgFsiANmiANwAwGgAYYD8wGGA/oBAwGeAYYDdoYDgAEDAZ0BjQNmjQNzAwGaAYsDgQKLA4gCAwGYAYsDdosDhwEDAZcBkgNmkgN0AwGUAZAD/QGQA4QCAwGSAZADdpADhQEDAZEBlwNmlwNwAwGOAZUD9QGVA/wBAwGMAZUDdpUDgQEDAYsBnANmnANzAwGIAZoD+wGaA4ICAwGGAZoDdpoDhAEDAYUBoQNmoQNzAwGCAZ8D9QGfA/wBAwGAAZ8Ddp8DgQECAX+mA2amA3ECAXykA/cBpAP+AQIBeqQDdqQDggECAXmrA2arA3ACAXapA/UBqQP8AQIBdKkDdqkDgQECAXOuA0GuA6YBAgFtsAM3sAO8AgIBbrADrwGwA78BAgFwsANisAOkAQIBbw==</sads:DebugSymbol.Symbol>
+  </Flowchart>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="CreateDirectory_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
+      <sap2010:ViewStateData Id="GetEnvironmentVariable_1" sap:VirtualizedContainerService.HintSize="314,58.6666666666667" />
+      <sap2010:ViewStateData Id="GetEnvironmentVariable_2" sap:VirtualizedContainerService.HintSize="314,58.6666666666667" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,62" />
+      <sap2010:ViewStateData Id="InputDialog_1" sap:VirtualizedContainerService.HintSize="314,92" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_18" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Delete_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="404.666666666667,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="418.666666666667,298" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_6" sap:VirtualizedContainerService.HintSize="418.666666666667,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Delete_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Catch`1_2" sap:VirtualizedContainerService.HintSize="404.666666666667,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418.666666666667,298" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_7" sap:VirtualizedContainerService.HintSize="418.666666666667,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="414.4,116" />
+      <sap2010:ViewStateData Id="WaitUiElementAppear_1" sap:VirtualizedContainerService.HintSize="414.4,107.2" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="414.4,88" />
+      <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="414.4,135.2" />
+      <sap2010:ViewStateData Id="TypeInto_2" sap:VirtualizedContainerService.HintSize="414.4,135.2" />
+      <sap2010:ViewStateData Id="Click_1" sap:VirtualizedContainerService.HintSize="414.4,107.2" />
+      <sap2010:ViewStateData Id="WaitUiElementAppear_2" sap:VirtualizedContainerService.HintSize="414.4,107.2" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_4" sap:VirtualizedContainerService.HintSize="414,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WaitUiElementAppear_3" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Click_2" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Click_3" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="WaitUiElementAppear_4" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="SelectItem_1" sap:VirtualizedContainerService.HintSize="314,134" />
+      <sap2010:ViewStateData Id="Click_4" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_5" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="CloseApplication_1" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="336,230">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WindowScope_1" sap:VirtualizedContainerService.HintSize="414,338" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_8" sap:VirtualizedContainerService.HintSize="414,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BuildDataTable_2" sap:VirtualizedContainerService.HintSize="553.6,60" />
+      <sap2010:ViewStateData Id="Delay_1" sap:VirtualizedContainerService.HintSize="516.8,22.4" />
+      <sap2010:ViewStateData Id="ExcelReadRange_1" sap:VirtualizedContainerService.HintSize="516.8,60" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_9" sap:VirtualizedContainerService.HintSize="516.8,88" />
+      <sap2010:ViewStateData Id="GetRowItem_1" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_2" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_3" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_4" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_5" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_6" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_7" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_8" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="200,22.4" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,209.6" />
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="486.4,1172.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="516.8,1321.6" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="539.2,1736.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="553.6,1846.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_10" sap:VirtualizedContainerService.HintSize="553.6,88" />
+      <sap2010:ViewStateData Id="ExcelWriteRange_1" sap:VirtualizedContainerService.HintSize="314.4,88" />
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="336.8,212.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_2" sap:VirtualizedContainerService.HintSize="553.6,322.4" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_11" sap:VirtualizedContainerService.HintSize="553.6,88" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="243.2,60" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="243.2,60" />
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="477.6,164" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_16" sap:VirtualizedContainerService.HintSize="477.6,88" />
+      <sap2010:ViewStateData Id="SendOutlookMail_1" sap:VirtualizedContainerService.HintSize="477.6,146.4" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_12" sap:VirtualizedContainerService.HintSize="476.666666666667,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelReadRange_2" sap:VirtualizedContainerService.HintSize="314.4,60" />
+      <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="336.8,184.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_3" sap:VirtualizedContainerService.HintSize="414.4,294.4" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_13" sap:VirtualizedContainerService.HintSize="414.4,88" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_17" sap:VirtualizedContainerService.HintSize="414.4,88" />
+      <sap2010:ViewStateData Id="GetRowItem_9" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="SendOutlookMail_2" sap:VirtualizedContainerService.HintSize="314.4,146.4" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_14" sap:VirtualizedContainerService.HintSize="314.4,88" />
+      <sap2010:ViewStateData Id="Sequence_16" sap:VirtualizedContainerService.HintSize="336.8,504">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="414.4,652.8" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_15" sap:VirtualizedContainerService.HintSize="414.4,88" />
+      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">80,563.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_7">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">80,493.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">180,546.4 180,563.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">90,423.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">190,476.4 180,476.4 180,493.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">90,353.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">190,406.4 190,423.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">90,283.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">190,336.4 190,353.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">90,213.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">190,266.4 190,283.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_9">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">90,143.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">190,196.4 190,213.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">90,83.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">190,136.4 190,143.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_10">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">90,13.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">190,66.4 190,83.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="688,653.6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">10,2.4</av:Point>
+            <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">70,40 90,40</av:PointCollection>
+            <x:Double x:Key="Width">673.6</x:Double>
+            <x:Double x:Key="Height">616.8</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="728,716.8" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
